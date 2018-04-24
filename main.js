@@ -56,24 +56,24 @@ const STATE = {
   },
 
   items: {
-    cat: [false,"emoji"],
-    dog: [false,"emoji"],
-    octopus: [false,"emoji"],
-    snake: [false,"emoji"],
-    guineaPig: [false,"emoji"],
+    cat: [false,"🐈"],
+    dog: [false,"🐕"],
+    octopus: [false,"🐙"],
+    snake: [false,"🐍"],
+    guineaPig: [false,"🐹"],
 
-    venusFlyTrap: [false,"emoji"],
-    aloeVera: [false,"emoji"],
-    cactus: [false,"emoji"],
-    tulip: [false,"emoji"],
-    marijuana: [false,"emoji"],
+    venusFlyTrap: [false,"🌺"],
+    aloeVera: [false,"🎍"],
+    cactus: [false,"🌵"],
+    tulip: [false,"🌷"],
+    marijuana: [false,"🌿"],
 
-    saw: [false,"emoji"],
-    wrench: [false,"emoji"],
-    screwdriver: [false,"emoji"],
-    batteries: [false,"emoji"],
-    candles: [false,"emoji"],
-    rollingPapers: [false,"emoji"]
+    saw: [false,"🗜️"],
+    wrench: [false,"🔧"],
+    screwdriver: [false,"🔨"],
+    batteries: [false,"🔋"],
+    candles: [false,"🕯️"],
+    rollingPapers: [false,"🗞️"]
   }
 
 }
