@@ -15,6 +15,7 @@ const GRID_ROWS = 5;
 const GRID_COLS = 7;
 const GRID_CELL_SIZE = 130;
 const GRID_EMPTY = [247, 245, 165];
+const GRID_DRAG = false;
 //const GRID_TYPE = 'hex';
 
 // REQUIRED: define how our resources will be represented
@@ -35,9 +36,51 @@ const STATE = {
   cashPerCrop: 100,
   investment: 0,
   aqueducts: 0,
-  wheats: 0
-}
+  wheats: 0,
 
+  year: 3333,
+
+  months: {
+    january: 31,
+    february: 31,
+    march: 31,
+    april: 30,
+    may: 31,
+    june: 30,
+    july: 31,
+    august: 31,
+    september: 30,
+    october: 31,
+    november: 30,
+    december: 31
+  },
+
+  items: {
+    cat: [false,"emoji"],
+    dog: [false,"emoji"],
+    octopus: [false,"emoji"],
+    snake: [false,"emoji"],
+    guineaPig: [false,"emoji"],
+
+    venusFlyTrap: [false,"emoji"],
+    aloeVera: [false,"emoji"],
+    cactus: [false,"emoji"],
+    tulip: [false,"emoji"],
+    marijuana: [false,"emoji"],
+
+    saw: [false,"emoji"],
+    wrench: [false,"emoji"],
+    screwdriver: [false,"emoji"],
+    batteries: [false,"emoji"],
+    candles: [false,"emoji"],
+    rollingPapers: [false,"emoji"]
+  }
+
+}
+console.log(STATE.items.cat[1]);
+//check turn event
+
+//random starting items
 
 // Define a Wolf "item"
 class Wolf extends Item {
