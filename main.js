@@ -58,8 +58,6 @@ const RESOURCES = {
     candles: [false,"🕯️"],
     rollingPapers: [false,"🗞️"]
   }
-
-
 }
 
 // REQUIRED: define our game state.
