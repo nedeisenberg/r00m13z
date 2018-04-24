@@ -2,12 +2,26 @@
 
 // REQUIRED: define images we want to use
 const IMAGES = {
-  wheat: 'https://i.imgur.com/ythxt2c.jpg',
-  sparse_wheat: 'https://i.imgur.com/lCIe5lH.jpg',
-  aqueduct: 'http://i.imgur.com/WtI3uue.jpg',
-  sick_wolf: 'https://i.imgur.com/kpuLqAv.jpg',
-  pig: 'https://kids.nationalgeographic.com/content/dam/kids/photos/animals/Mammals/H-P/pig-young-closeup.ngsversion.1412640764383.jpg',
-  wolf: 'https://static01.nyt.com/images/2017/10/17/science/17SCI-WOLVES7/17SCI-WOLVES7-superJumbo.jpg'
+  dirtylaundry: 'https://i.imgur.com/jcg7wJI.png',
+  cleanlaundry: 'https://i.imgur.com/pdFkpdA.png',
+  dirtysink: 'https://i.imgur.com/TpndZpq.jpg',
+  cleansink: 'https://i.imgur.com/tXFgduF.jpg',
+  dirtytoilet: 'https://i.imgur.com/hDUtohr.jpg',
+  cleantoilet: 'https://i.imgur.com/7qopSIG.jpg',
+  rent: 'https://i.imgur.com/JBAvBbu.jpg',
+  mold: 'https://i.imgur.com/ukloFtk.png',
+  travel: 'https://i.imgur.com/wvH32qY.png',
+  utilities: 'https://i.imgur.com/VfBZLIx.png',
+  flood:'https://i.imgur.com/mumNmzK.png',
+  bugs: 'https://i.imgur.com/jnNEIUz.png',
+  brokencup: 'https://i.imgur.com/zceb3MO.jpg',
+  ghost: 'https://i.imgur.com/yPCQLce.png',
+  party: 'https://i.imgur.com/yEDl6jA.png',
+  evilcat: 'https://i.imgur.com/rmFqDV8.png',
+  dogbark: 'https://i.imgur.com/Vzsbvpb.png',
+  octopusescape: 'https://i.imgur.com/7L41jr2.png',
+  policeraid: 'https://i.imgur.com/dD6hBPs.png',
+  doorunlocked: 'https://i.imgur.com/u9VrfwT.png',
 };
 
 // REQUIRED: configure the grid
