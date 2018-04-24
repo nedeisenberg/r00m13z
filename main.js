@@ -22,38 +22,7 @@ const GRID_DRAG = false;
 const RESOURCES = {
   water: '🌊',
   nitrogen: '💩',
-  money: '💵'
-}
-
-// REQUIRED: define our game state.
-// At minimum this must define initial values for your resources.
-const STATE = {
-  resources: {
-    water: 100,
-    nitrogen: 50,
-    money: 0
-  },
-  cashPerCrop: 100,
-  investment: 0,
-  aqueducts: 0,
-  wheats: 0,
-
-  year: 3333,
-
-  months: {
-    january: 31,
-    february: 31,
-    march: 31,
-    april: 30,
-    may: 31,
-    june: 30,
-    july: 31,
-    august: 31,
-    september: 30,
-    october: 31,
-    november: 30,
-    december: 31
-  },
+  money: '💵',
 
   items: {
     cat: [false,"🐈"],
@@ -76,8 +45,47 @@ const STATE = {
     rollingPapers: [false,"🗞️"]
   }
 
+
 }
-console.log(STATE.items.cat[1]);
+
+// REQUIRED: define our game state.
+// At minimum this must define initial values for your resources.
+const STATE = {
+  resources: {
+    water: 100,
+    nitrogen: 50,
+    money: 0
+  },
+  cashPerCrop: 100,
+  investment: 0,
+  aqueducts: 0,
+  wheats: 0,
+
+  year: 3333,
+
+  leapYear: false,
+
+  months: {
+    january: 31,
+    february: 31,
+    march: 31,
+    april: 30,
+    may: 31,
+    june: 30,
+    july: 31,
+    august: 31,
+    september: 30,
+    october: 31,
+    november: 30,
+    december: 31
+  },
+
+  lastDayOfMonth:0
+
+
+
+}
+console.log(RESOURCES.items.cat[1]);
 //check turn event
 
 //random starting items
@@ -332,6 +340,10 @@ function init() {
     new BuyButton('Upgrade tractor', tractorBonus),
     new BuyButton('Open Roth IRA', investmentBonus)
   ]);
+  var turnTable = new Menu('Menu',[
+
+
+  ])
 
   // Define a harvester which
   // regularly gives the player water
