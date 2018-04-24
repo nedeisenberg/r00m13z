@@ -2,26 +2,26 @@
 
 // REQUIRED: define images we want to use
 const IMAGES = {
-  dirtylaundry: 'https://i.imgur.com/jcg7wJI.png',
-  cleanlaundry: 'https://i.imgur.com/pdFkpdA.png',
-  dirtysink: 'https://i.imgur.com/TpndZpq.jpg',
-  cleansink: 'https://i.imgur.com/tXFgduF.jpg',
-  dirtytoilet: 'https://i.imgur.com/hDUtohr.jpg',
-  cleantoilet: 'https://i.imgur.com/7qopSIG.jpg',
+  dirtyLaundry: 'https://i.imgur.com/jcg7wJI.png',
+  cleanLaundry: 'https://i.imgur.com/pdFkpdA.png',
+  dirtySink: 'https://i.imgur.com/TpndZpq.jpg',
+  cleanSink: 'https://i.imgur.com/tXFgduF.jpg',
+  dirtyToilet: 'https://i.imgur.com/hDUtohr.jpg',
+  cleanToilet: 'https://i.imgur.com/7qopSIG.jpg',
   rent: 'https://i.imgur.com/JBAvBbu.jpg',
   mold: 'https://i.imgur.com/ukloFtk.png',
   travel: 'https://i.imgur.com/wvH32qY.png',
   utilities: 'https://i.imgur.com/VfBZLIx.png',
   flood:'https://i.imgur.com/mumNmzK.png',
   bugs: 'https://i.imgur.com/jnNEIUz.png',
-  brokencup: 'https://i.imgur.com/zceb3MO.jpg',
+  brokenCup: 'https://i.imgur.com/zceb3MO.jpg',
   ghost: 'https://i.imgur.com/yPCQLce.png',
   party: 'https://i.imgur.com/yEDl6jA.png',
-  evilcat: 'https://i.imgur.com/rmFqDV8.png',
-  dogbark: 'https://i.imgur.com/Vzsbvpb.png',
-  octopusescape: 'https://i.imgur.com/7L41jr2.png',
-  policeraid: 'https://i.imgur.com/dD6hBPs.png',
-  doorunlocked: 'https://i.imgur.com/u9VrfwT.png',
+  evilCat: 'https://i.imgur.com/rmFqDV8.png',
+  dogBark: 'https://i.imgur.com/Vzsbvpb.png',
+  octopusEscape: 'https://i.imgur.com/7L41jr2.png',
+  policeRaid: 'https://i.imgur.com/dD6hBPs.png',
+  doorUnlocked: 'https://i.imgur.com/u9VrfwT.png',
 };
 
 // REQUIRED: configure the grid
@@ -30,7 +30,6 @@ const GRID_COLS = 7;
 const GRID_CELL_SIZE = 130;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
-//const GRID_TYPE = 'hex';
 
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
@@ -98,7 +97,6 @@ const STATE = {
 
 }
 console.log(RESOURCES.items.cat[1]);
-//check turn event
 
 //random starting items
 
@@ -247,5 +245,6 @@ function init() {
 // We're just using it to set a background color
 function main() {
   background(58, 170, 80);
+  //check turn event
   meter1.update(meter1.val + 0.1);
 }
