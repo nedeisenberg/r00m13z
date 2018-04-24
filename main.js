@@ -94,8 +94,8 @@ const STATE = {
     december: 31
   },
 
-  lastDayOfMonth:0
-
+//0-6 for sunday thru monday
+  lastDayOfMonth: 0
 
 
 }
@@ -104,143 +104,6 @@ console.log(RESOURCES.items.cat[1]);
 
 //random starting items
 
-// Define a Wolf "item"
-class Wolf extends Item {
-  // All wolves start out healthy
-  init() {
-    this.sick = false;
-  }
-
-  // No cost, can't buy wolves
-  get cost() {
-    return {}
-  }
-
-  // On mouseover, let us know
-  // if the wolf is sick or not
-  get info() {
-    if (this.sick) {
-      return 'not feeling well :(';
-    } else {
-      return 'grrrr....';
-    }
-  }
-
-  // Show a different image for sick
-  // vs healthy wolves
-  get image() {
-    if (this.sick) {
-      return 'sick_wolf'
-    } else {
-      return 'wolf'
-    }
-  }
-
-  // Runs every frame.
-  update(neighbors) {
-    var self = this;
-
-    // Check neighbors of the wolf
-    neighbors.forEach(function(neighbor) {
-      // If a neighbor is an Aqueduct,
-      // the wolf might get sick
-      if (neighbor.item instanceof Aqueduct) {
-        // With 5% chance, wolves get sick
-        // and die in 5 seconds
-        if (Math.random() < 0.05) {
-          self.sick = true;
-
-          // Destroy the wolf in 5 seconds
-          schedule(function() {
-            self.destroy();
-          }, 5000);
-        }
-      }
-    })
-  }
-}
-
-
-// Define a Pig "item"
-class Pig extends Item {
-  // Pigs cost $5
-  get cost() {
-    return {
-      money: 5
-    }
-  }
-
-  get info() {
-    return 'piggy'
-  }
-
-  get image() {
-    return 'pig'
-  }
-
-  // Runs every frame
-  update(neighbors) {
-    // Pigs expand to adjacent wheat plots
-    // with 1% probability
-    neighbors.forEach(function(neighbor) {
-      // If the neighbor is a Wheat...
-      if (neighbor.item instanceof Wheat) {
-        // With 1% probability...
-        if (Math.random() < 0.01) {
-          // Create a new Pig
-          var pig = new Pig();
-
-          // Place the Pig where the Wheat was
-          place(pig, neighbor.x, neighbor.y);
-        }
-      }
-    })
-
-    // Wolves spawn on pigs with
-    // a 0.5% probability
-    if (Math.random() < 0.005) {
-      // Create the Wolf
-      var wolf = new Wolf();
-
-      // Destroy this Pig
-      this.destroy();
-
-      // Place the Wolf where this Pig was
-      place(wolf, this.x, this.y);
-    }
-  }
-}
-
-// Define an Aqueduct "item"
-class Aqueduct extends Item {
-  get cost() {
-    return {
-      money: 25
-    }
-  }
-
-  get info() {
-    return 'Cool aqueduct'
-  }
-
-  get image() {
-    return 'aqueduct'
-  }
-
-  // When the player places an Aqueduct,
-  // increment the amount of Aqueducts the player
-  // owns. We'll use this to figure out how much
-  // water the player gets.
-  onPlace() {
-    STATE.aqueducts++;
-  }
-
-  // If an Aqueduct gets destroyed,
-  // reduce the number of Aqueducts the player owns.
-  onDestroy() {
-    STATE.aqueducts--;
-  }
-}
 
 // Define a Wheat "item"
 class Wheat extends Item {
@@ -349,8 +212,6 @@ function init() {
   // Setup the Menu for buying stuff
   var menu = new Menu('Farm Mall', [
     new BuyButton('Buy wheat', Wheat),
-    new BuyButton('Buy pig', Pig),
-    new BuyButton('Buy aqueduct', Aqueduct),
     new BuyButton('Upgrade tractor', tractorBonus),
     new BuyButton('Open Roth IRA', investmentBonus)
   ]);
