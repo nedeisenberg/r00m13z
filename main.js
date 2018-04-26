@@ -39,6 +39,7 @@ const RESOURCES = {
   water: '🌊',
   nitrogen: '💩',
   money: '💵',
+  income: '💹',
 
   items: {
     cat: [false,"🐈"],
