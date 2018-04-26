@@ -22,6 +22,8 @@ const IMAGES = {
   octopusEscape: 'https://i.imgur.com/7L41jr2.png',
   policeRaid: 'https://i.imgur.com/dD6hBPs.png',
   doorUnlocked: 'https://i.imgur.com/u9VrfwT.png',
+  atWork: 'https://i.imgur.com/aqhTIEA.jpg',
+  salary: 'https://i.imgur.com/RejTpg6.png'
 };
 
 // REQUIRED: configure the grid
@@ -235,7 +237,7 @@ function init() {
 
   // Define a harvester which
   // compounds the amount of money the player
-  // has based on their investment return rate
+  // has based on their investment return rateaa
   defineHarvester('money', function() {
     return STATE.resources.money * STATE.investment;
   }, 2000);
