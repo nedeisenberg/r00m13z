@@ -23,7 +23,8 @@ const IMAGES = {
   policeRaid: 'https://i.imgur.com/dD6hBPs.png',
   doorUnlocked: 'https://i.imgur.com/u9VrfwT.png',
   atWork: 'https://i.imgur.com/aqhTIEA.jpg',
-  salary: 'https://i.imgur.com/RejTpg6.png'
+  salary: 'https://i.imgur.com/RejTpg6.png',
+  border: 'https://i.imgur.com/PtzPUQy.png'
 };
 
 // REQUIRED: configure the grid
