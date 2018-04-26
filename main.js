@@ -146,7 +146,7 @@ class Selector extends Item {
   // Show a different image
   // depending on how many bushels are left
   get image() {
-    return 'scaryCat';
+    return 'border';
   }
   // When a Wheat is clicked on...
   onClick() {
@@ -217,7 +217,7 @@ function init() {
   STATE.rents += 1;
 
   var selector = new Selector();
-  place(selector,0,0);
+  place(selector,0,1);
   // Setup the Menu for buying stuff
   var menu = new Menu('Farm Mall', [
     //new BuyButton('Buy wheat', Rent),
