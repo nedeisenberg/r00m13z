@@ -17,7 +17,7 @@ const IMAGES = {
   brokenCup: 'https://i.imgur.com/zceb3MO.jpg',
   ghost: 'https://i.imgur.com/yPCQLce.png',
   party: 'https://i.imgur.com/yEDl6jA.png',
-  evilCat: 'https://i.imgur.com/rmFqDV8.png',
+  scaryCat: 'https://i.imgur.com/rmFqDV8.png',
   dogBark: 'https://i.imgur.com/Vzsbvpb.png',
   octopusEscape: 'https://i.imgur.com/7L41jr2.png',
   policeRaid: 'https://i.imgur.com/dD6hBPs.png',
@@ -30,6 +30,7 @@ const GRID_COLS = 7;
 const GRID_CELL_SIZE = 130;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
+const BACKGROUND_COLOR = [0,255,0]
 
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
@@ -70,7 +71,7 @@ const STATE = {
   cashPerCrop: 100,
   investment: 0,
   aqueducts: 0,
-  wheats: 0,
+  rents: 0,
 
   leapYear: false,
 
@@ -93,57 +94,56 @@ const STATE = {
   currentMonth : 1,
   currentYear : 2000,
 
-
-
 //0-6 for sunday thru monday
   lastDayOfMonth: 0
-
-
 }
 console.log(RESOURCES.items.cat[1]);
 
 //random starting items
 
 
-// Define a Wheat "item"
-class Wheat extends Item {
-
-  // Initialize the Wheat with
-  // 3 bushels
-  init() {
-    this.quantity = 3;
+class RentCell extends Cell{
+  constructor(rent){
+    super();
+    this.rent = rent;
   }
 
+  get info(){
+    return 'The rent is `${this.rent}';
+  }
+
+  get image(){
+    return 'rent';
+  }
+
+  canPlace(item) {
+    return false;
+  }
+}
+
+// Define a Wheat "item"
+class Selector extends Item {
+  // Initialize the rent with
+  // 3 bushels
+  init() {
+  }
   // Wheat costs water and nitrogen
   get cost() {
     return {
-      water: 20,
-      nitrogen: 5
+//      water: 20,
+//      nitrogen: 5
     }
   }
-
   // Show a different tooltip
   // depending on how many bushels are left
   get info() {
-    if (this.quantity < 2) {
-      return 'This wheat is almost gone!'
-    } else if (this.quantity < 3) {
-      return 'This wheat is running low'
-    } else {
-      return 'This is some nice wheat'
-    }
+      return 'This is today!'
   }
-
   // Show a different image
   // depending on how many bushels are left
   get image() {
-    if (this.quantity < 3) {
-      return 'sparse_wheat'
-    } else {
-      return 'wheat'
-    }
+    return 'scaryCat';
   }
-
   // When a Wheat is clicked on...
   onClick() {
     // Remove a bushel
@@ -166,13 +166,13 @@ class Wheat extends Item {
   // We'll use this to keep track
   // of water usage across the farm
   onPlace() {
-    STATE.wheats++;
+    STATE.rents++;
   }
 
   // When a Wheat is destroyed,
   // decrement the wheat count
   onDestroy() {
-    STATE.wheats--;
+    STATE.rents--;
   }
 }
 
@@ -205,19 +205,23 @@ var meter1, meter2;
 // Initial setup of the game
 function init() {
   // Create a starting wheat plot
-  var wheat = new Wheat();
-  place(wheat, 0, 0);
-  STATE.wheats += 1;
+  let rentCell = new RentCell('too damn high');400
+//  place(rentCell, 0, 0);
+  GAME.grid.setCellAt(rentCell,0,1);
+  //literal coordinates must be replaced EVENTUALLY by functional coordinates
 
+  STATE.rents += 1;
+
+  var selector = new Selector();
+  place(selector,0,0);
   // Setup the Menu for buying stuff
   var menu = new Menu('Farm Mall', [
-    new BuyButton('Buy wheat', Wheat),
+    //new BuyButton('Buy wheat', Rent),
     new BuyButton('Upgrade tractor', tractorBonus),
     new BuyButton('Open Roth IRA', investmentBonus)
   ]);
   var turnTable = new Menu('Menu',[
-
-
+    //new
   ])
 
   // Define a harvester which
@@ -230,7 +234,7 @@ function init() {
   // Define a harvester which uses up
   // water based on how much wheat the player has
   defineHarvester('water', function() {
-    return -1 * STATE.wheats;
+    return -1 * STATE.rents;
   }, 2000);
 
   // Define a harvester which
