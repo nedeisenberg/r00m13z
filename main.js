@@ -72,8 +72,6 @@ const STATE = {
   aqueducts: 0,
   wheats: 0,
 
-  year: 3333,
-
   leapYear: false,
 
   months: {
@@ -90,6 +88,12 @@ const STATE = {
     november: 30,
     december: 31
   },
+
+  currentDay = 1;
+  currentMonth = 1;
+  currentYear = 2000;
+
+  
 
 //0-6 for sunday thru monday
   lastDayOfMonth: 0
