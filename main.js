@@ -89,11 +89,11 @@ const STATE = {
     december: 31
   },
 
-  currentDay = 1;
-  currentMonth = 1;
-  currentYear = 2000;
+  currentDay : 1,
+  currentMonth : 1,
+  currentYear : 2000,
 
-  
+
 
 //0-6 for sunday thru monday
   lastDayOfMonth: 0
