@@ -37,7 +37,7 @@ const IMAGES = {
 };
 
 // REQUIRED: configure the grid
-const GRID_ROWS = 5;
+const GRID_ROWS = 6;
 const GRID_COLS = 7;
 const GRID_CELL_SIZE = 130;
 const GRID_EMPTY = [247, 245, 165];
@@ -48,6 +48,12 @@ const BACKGROUND_COLOR = [0,255,0]
 const RESOURCES = {
   money: '💵',
   income: '💹',
+
+  currentDay: "Today's Date:",
+  info: {
+    currentDate: "Today's Date:",
+    currentToDo: []
+  },
 
   items: {
     cat: [false,"🐈"],
@@ -77,7 +83,9 @@ const STATE = {
   resources: {
 
     money: 3000,
-    income: 300
+    income: 300,
+
+    currentDate: "0/0/0000"
   },
   cashPerCrop: 100,
   investment: 0,
@@ -120,6 +128,17 @@ console.log(RESOURCES.items.cat[1]);
 
 //random starting items
 
+class Date{
+  constructor(d,m,y){
+    this.day = d;
+    this.month = m;
+    this.year = y;
+  }
+
+  asTile(){
+    return '';
+  }
+}
 
 class RentCell extends Cell{
   constructor(rent){
@@ -209,25 +228,16 @@ class Selector extends Item {
     // Give the player money depending on the STATE.cashPerCrop variable
     STATE.resources.money += STATE.cashPerCrop;
 
-    // Check if any bushels remain.
-    // If not, destroy this wheat and
-    // let the player know
     if (this.quantity <= 0) {
       this.destroy();
       showMessage('You lost some wheat!')
     }
   }
 
-  // When a new Wheat is placed,
-  // increment the wheat count.
-  // We'll use this to keep track
-  // of water usage across the farm
   onPlace() {
     STATE.rents++;
   }
 
-  // When a Wheat is destroyed,
-  // decrement the wheat count
   onDestroy() {
     STATE.rents--;
   }
@@ -286,8 +296,11 @@ function init() {
     new BuyButton('Upgrade tractor', tractorBonus),
     new BuyButton('Open Roth IRA', investmentBonus)
   ]);
-  var turnTable = new Menu('Menu',[
-    //new
+  var turnMenu = new Menu('Turn',[
+    new Button('Next Turn', () => {
+      selector.destroy();
+      place(selector,1,1);
+  })
   ])
 
   // Define a harvester which
@@ -328,6 +341,7 @@ function placeCalendarDays(){
 // We're just using it to set a background color
 function main() {
   background(58, 170, 80);
+//  console.log(STATE.months.january)
   //check turn event
   meter1.update(meter1.val + 0.1);
 }
