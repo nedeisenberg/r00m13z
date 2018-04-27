@@ -24,9 +24,16 @@ const IMAGES = {
   doorUnlocked: 'https://i.imgur.com/u9VrfwT.png',
   atWork: 'https://i.imgur.com/aqhTIEA.jpg',
   salary: 'https://i.imgur.com/RejTpg6.png',
-  border: 'https://i.imgur.com/PtzPUQy.png'
+  border: 'https://i.imgur.com/PtzPUQy.png',
 
-  //please place images here thanks
+  //days
+  sunday: 'https://i.imgur.com/54BUbYO.png',
+  monday: 'https://i.imgur.com/5J0ewsQ.png',
+  tuesday: 'https://i.imgur.com/ATO6mY3.png',
+  wednesday: 'https://i.imgur.com/UO88fZa.png',
+  thursday: 'https://i.imgur.com/ZLIwhuO.png',
+  friday: 'https://i.imgur.com/HXMZVKC.png',
+  saturday: 'https://i.imgur.com/72IRSxz.png'
 };
 
 // REQUIRED: configure the grid
@@ -39,8 +46,6 @@ const BACKGROUND_COLOR = [0,255,0]
 
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
-  water: '🌊',
-  nitrogen: '💩',
   money: '💵',
   income: '💹',
 
@@ -70,9 +75,9 @@ const RESOURCES = {
 // At minimum this must define initial values for your resources.
 const STATE = {
   resources: {
-    water: 100,
-    nitrogen: 50,
-    money: 0
+
+    money: 3000,
+    income: 300
   },
   cashPerCrop: 100,
   investment: 0,
@@ -80,6 +85,14 @@ const STATE = {
   rents: 0,
 
   leapYear: false,
+
+  days: ['sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday'],
 
   months: {
     january: 31,
@@ -144,6 +157,25 @@ class PayDayCell extends Cell{
   canPlace(item) {
     return false;
   }
+}
+
+class CalendarDayCell extends Cell{
+  constructor(day){
+    super();
+    this.day = day;
+  }
+  get info(){
+    return NONE;
+  }
+
+  get image(){
+    return this.day;
+  }
+
+  canPlace(item) {
+    return false;
+  }
+
 }
 
 // Define a Wheat "item"
@@ -229,6 +261,8 @@ var meter1, meter2;
 
 // Initial setup of the game
 function init() {
+
+  placeCalendarDays();
   // Create a starting wheat plot
   let rentCell = new RentCell('350');
 //  place(rentCell, 0, 0);
@@ -278,6 +312,15 @@ function init() {
 
   meter1 = new Meter('Test Meter', 10);
   meter2 = new Meter('Another meter', 50);
+}
+
+function placeCalendarDays(){
+
+  for(var i = 0; i<7 ; i++){
+    let calendarDay = new CalendarDayCell(STATE.days[i]);
+    GAME.grid.setCellAt(calendarDay,i,0);
+  }
+
 }
 
 
