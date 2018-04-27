@@ -25,6 +25,8 @@ const IMAGES = {
   atWork: 'https://i.imgur.com/aqhTIEA.jpg',
   salary: 'https://i.imgur.com/RejTpg6.png',
   border: 'https://i.imgur.com/PtzPUQy.png'
+
+  //please place images here thanks
 };
 
 // REQUIRED: configure the grid
@@ -125,6 +127,25 @@ class RentCell extends Cell{
   }
 }
 
+class PayDayCell extends Cell{
+  constructor(sal){
+    super();
+    this.sal = sal;
+  }
+
+  get info(){
+    return 'You make`${this.sal}';
+  }
+
+  get image(){
+    return 'salary';
+  }
+
+  canPlace(item) {
+    return false;
+  }
+}
+
 // Define a Wheat "item"
 class Selector extends Item {
   // Initialize the rent with
@@ -209,10 +230,17 @@ var meter1, meter2;
 // Initial setup of the game
 function init() {
   // Create a starting wheat plot
-  let rentCell = new RentCell('too damn high');400
+  let rentCell = new RentCell('350');
 //  place(rentCell, 0, 0);
   GAME.grid.setCellAt(rentCell,0,1);
   //literal coordinates must be replaced EVENTUALLY by functional coordinates
+
+  let payDayCell = new PayDayCell('400');
+
+  GAME.grid.setCellAt(payDayCell,5,2);
+
+  GAME.grid.setCellAt(payDayCell,5,4);
+
 
   STATE.rents += 1;
 
@@ -233,7 +261,7 @@ function init() {
   // depending on how many aqueducts they own
   defineHarvester('water', function() {
     return 2 * STATE.aqueducts;
-  }, 2000)
+  }, 2000);
 
   // Define a harvester which uses up
   // water based on how much wheat the player has
@@ -243,7 +271,7 @@ function init() {
 
   // Define a harvester which
   // compounds the amount of money the player
-  // has based on their investment return rateaa
+  // has based on their investment return rate
   defineHarvester('money', function() {
     return STATE.resources.money * STATE.investment;
   }, 2000);
