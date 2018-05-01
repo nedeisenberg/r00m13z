@@ -25,6 +25,8 @@ const IMAGES = {
   atWork: 'https://i.imgur.com/aqhTIEA.jpg',
   salary: 'https://i.imgur.com/RejTpg6.png',
   border: 'https://i.imgur.com/PtzPUQy.png',
+  letterF: 'https://i.imgur.com/9MCv9xI.png',
+  letterD: 'https://i.imgur.com/1AeWD9i.png',
 
   //days
   sunday: 'https://i.imgur.com/54BUbYO.png',
