@@ -214,21 +214,73 @@ class BathDayCell extends Cell{
   }
 }
 
-class CalendarDayCell extends Cell{
-  constructor(day){
+class DishDayCell extends Cell{
+  constructor(){
     super();
-    this.day = day;
+    this.clean = false;
   }
+
   get info(){
-    return NONE;
+    if (this.clean){
+      return 'The sink is clean';
+    }else{
+      return 'The sink is dirty';
+    }
   }
 
   get image(){
-    return this.day;
+    if(this.clean){
+      return 'cleanSink';
+    }else{
+      return 'dirtySink';
+    }
   }
 
   canPlace(item) {
     return false;
+  }
+
+  toggleClean(){
+    if(this.clean){
+      this.clean = false;
+    }else{
+      this.clean = true;
+    }
+  }
+}
+
+class LaundryDayCell extends Cell{
+  constructor(){
+    super();
+    this.clean = false;
+  }
+
+  get info(){
+    if (this.clean){
+      return 'The laundry is tidy';
+    }else{
+      return 'The laundry is dirty';
+    }
+  }
+
+  get image(){
+    if(this.clean){
+      return 'cleanLaundry';
+    }else{
+      return 'dirtyLaundry';
+    }
+  }
+
+  canPlace(item) {
+    return false;
+  }
+
+  toggleClean(){
+    if(this.clean){
+      this.clean = false;
+    }else{
+      this.clean = true;
+    }
   }
 }
 
@@ -241,8 +293,8 @@ class Selector extends Item {
   // Wheat costs water and nitrogen
   get cost() {
     return {
-//      water: 20,
-//      nitrogen: 5
+  //      water: 20,
+  //      nitrogen: 5
     }
   }
   // Show a different tooltip
@@ -278,7 +330,6 @@ class Selector extends Item {
   }
 }
 
-
 // Define a bonus
 var tractorBonus = new Bonus(
   'Powerful Tractor',
@@ -301,28 +352,36 @@ var investmentBonus = new Bonus(
     STATE.investment = 0.1;
   });
 
-
 var meter1, meter2;
 
 // Initial setup of the game
 function init() {
 
-  placeCalendarDays();
   // Create a starting wheat plot
   let rentCell = new RentCell('350');
 //  place(rentCell, 0, 0);
   GAME.grid.setCellAt(rentCell,0,1);
   //literal coordinates must be replaced EVENTUALLY by functional coordinates
 
+  ////MOVE DECLARATIONS TO GLOBAL
   let payDayCell = new PayDayCell('400');
 
-  let bathDayCell = new BathDayCell();
+  let bathDayCell = new BathDayCell();bathDayCell.toggleClean();
+
+  let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
+
+  let laundryDayCell = new LaundryDayCell();laundryDayCell.toggleClean();
 
   GAME.grid.setCellAt(payDayCell,5,2);
 
   GAME.grid.setCellAt(payDayCell,5,4);
 
-  GAME.grid.setCellAt(bathDayCell,1,2);
+  GAME.grid.setCellAt(bathDayCell,1,1);
+
+  GAME.grid.setCellAt(dishDayCell,2,1);
+  GAME.grid.setCellAt(dishDayCell,4,1);
+
+  GAME.grid.setCellAt(laundryDayCell,3,1);
 
   STATE.rents += 1;
 
@@ -365,15 +424,6 @@ function init() {
   meter2 = new Meter('Deb', 50);
 }
 
-function placeCalendarDays(){
-
-  for(var i = 0; i<7 ; i++){
-    let calendarDay = new CalendarDayCell(STATE.days[i]);
-    GAME.grid.setCellAt(calendarDay,i,0);
-  }
-
-}
-
 
 // The game's main loop.
 // We're just using it to set a background color
@@ -381,5 +431,15 @@ function main() {
   background(58, 170, 80);
 //  console.log(STATE.months.january)
   //check turn event
+    //chore?
+    //payday?
+    //random event?
+  //check week event
+    //reset chores
+  //check month event
+    //rent
+  //check year event
+    //rent raise
+
   meter1.update(meter1.val + 0.1);
 }
