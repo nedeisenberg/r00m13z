@@ -49,11 +49,10 @@ const RESOURCES = {
   money: '💵',
   income: '💹',
 
-  currentDay: "Today's Date:",
-  info: {
-    currentDate: "Today's Date:",
-    currentToDo: []
-  },
+  currentDay: "Day: ",
+  currentWeek: "Week: ",
+  currentMonth: "Month: ",
+  currentYear: "Year: ",
 
   items: {
     cat: [false,"🐈"],
@@ -85,7 +84,10 @@ const STATE = {
     money: 3000,
     income: 300,
 
-    currentDate: "0/0/0000"
+    currentDay : 1,
+    currentWeek: 1,
+    currentMonth : 1,
+    currentYear : 2000
   },
   cashPerCrop: 100,
   investment: 0,
@@ -117,9 +119,6 @@ const STATE = {
     december: 31
   },
 
-  currentDay : 1,
-  currentMonth : 1,
-  currentYear : 2000,
 
 //0-6 for sunday thru monday
   lastDayOfMonth: 0
@@ -178,6 +177,41 @@ class PayDayCell extends Cell{
   }
 }
 
+class BathDayCell extends Cell{
+  constructor(){
+    super();
+    this.clean = false;
+  }
+
+  get info(){
+    if (this.clean){
+      return 'The bathroom is clean';
+    }else{
+      return 'The bathroom is dirty';
+    }
+  }
+
+  get image(){
+    if(this.clean){
+      return 'cleanToilet';
+    }else{
+      return 'dirtyToilet';
+    }
+  }
+
+  canPlace(item) {
+    return false;
+  }
+
+  toggleClean(){
+    if(this.clean){
+      this.clean = false;
+    }else{
+      this.clean = true;
+    }
+  }
+}
+
 class CalendarDayCell extends Cell{
   constructor(day){
     super();
@@ -194,7 +228,6 @@ class CalendarDayCell extends Cell{
   canPlace(item) {
     return false;
   }
-
 }
 
 // Define a Wheat "item"
@@ -281,10 +314,13 @@ function init() {
 
   let payDayCell = new PayDayCell('400');
 
+  let bathDayCell = new BathDayCell();
+
   GAME.grid.setCellAt(payDayCell,5,2);
 
   GAME.grid.setCellAt(payDayCell,5,4);
 
+  GAME.grid.setCellAt(bathDayCell,1,2);
 
   STATE.rents += 1;
 
@@ -306,15 +342,15 @@ function init() {
   // Define a harvester which
   // regularly gives the player water
   // depending on how many aqueducts they own
-  defineHarvester('water', function() {
-    return 2 * STATE.aqueducts;
-  }, 2000);
+//  defineHarvester('water', function() {
+//    return 2 * STATE.aqueducts;
+//  }, 2000);
 
   // Define a harvester which uses up
   // water based on how much wheat the player has
-  defineHarvester('water', function() {
-    return -1 * STATE.rents;
-  }, 2000);
+//  defineHarvester('water', function() {
+//    return -1 * STATE.rents;
+//  }, 2000);
 
   // Define a harvester which
   // compounds the amount of money the player
@@ -323,8 +359,8 @@ function init() {
     return STATE.resources.money * STATE.investment;
   }, 2000);
 
-  meter1 = new Meter('Test Meter', 10);
-  meter2 = new Meter('Another meter', 50);
+  meter1 = new Meter('Fran', 10);
+  meter2 = new Meter('Deb', 50);
 }
 
 function placeCalendarDays(){
