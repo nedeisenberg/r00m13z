@@ -28,7 +28,7 @@ const IMAGES = {
   letterF: 'https://i.imgur.com/9MCv9xI.png',
   letterD: 'https://i.imgur.com/1AeWD9i.png',
   fullTrash: 'https://i.imgur.com/dBuJxZq.jpg',
-  //empty trash
+  emptyTrash: 'https://i.imgur.com/nGfRzez.jpg',
 
   //days
   sunday: 'https://i.imgur.com/54BUbYO.png',
@@ -41,9 +41,9 @@ const IMAGES = {
 };
 
 // REQUIRED: configure the grid
-const GRID_ROWS = 6;
+const GRID_ROWS = 5;
 const GRID_COLS = 7;
-const GRID_CELL_SIZE = 130;
+const GRID_CELL_SIZE = 150;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
 const BACKGROUND_COLOR = [0,255,0]
@@ -140,6 +140,25 @@ class Date{
 
   asTile(){
     return '';
+  }
+}
+
+class CalendarDayCell extends Cell{
+  constructor(day){
+    super();
+    this.day = day;
+  }
+
+  get info(){
+    return '';
+  }
+
+  get image(){
+    return this.day;
+  }
+
+  canPlace(item) {
+    return false;
   }
 }
 
@@ -251,7 +270,7 @@ class DishDayCell extends Cell{
   }
 }
 
-class LaundryDayCell extends Cell{
+class TrashDayCell extends Cell{
   constructor(){
     super();
     this.clean = false;
@@ -259,17 +278,17 @@ class LaundryDayCell extends Cell{
 
   get info(){
     if (this.clean){
-      return 'The laundry is tidy';
+      return 'The trash is empty';
     }else{
-      return 'The laundry is dirty';
+      return 'The trash is overflowing';
     }
   }
 
   get image(){
     if(this.clean){
-      return 'cleanLaundry';
+      return 'emptyTrash';
     }else{
-      return 'dirtyLaundry';
+      return 'fullTrash';
     }
   }
 
@@ -356,23 +375,27 @@ var investmentBonus = new Bonus(
 
 var meter1, meter2;
 
+
+////MOVE DECLARATIONS TO GLOBAL
+let payDayCell = new PayDayCell('400');
+
+let bathDayCell = new BathDayCell();bathDayCell.toggleClean();
+
+let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
+
+let trashDayCell = new TrashDayCell();trashDayCell.toggleClean();
+
+var week = 1;
+var day = 0;
+
+
 // Initial setup of the game
 function init() {
-
+  placeCalendarDays();
   // Create a starting wheat plot
   let rentCell = new RentCell('350');
 //  place(rentCell, 0, 0);
   GAME.grid.setCellAt(rentCell,0,1);
-  //literal coordinates must be replaced EVENTUALLY by functional coordinates
-
-  ////MOVE DECLARATIONS TO GLOBAL
-  let payDayCell = new PayDayCell('400');
-
-  let bathDayCell = new BathDayCell();bathDayCell.toggleClean();
-
-  let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
-
-  let laundryDayCell = new LaundryDayCell();laundryDayCell.toggleClean();
 
   GAME.grid.setCellAt(payDayCell,5,2);
 
@@ -383,7 +406,7 @@ function init() {
   GAME.grid.setCellAt(dishDayCell,2,1);
   GAME.grid.setCellAt(dishDayCell,4,1);
 
-  GAME.grid.setCellAt(laundryDayCell,3,1);
+  GAME.grid.setCellAt(trashDayCell,3,1);
 
   STATE.rents += 1;
 
@@ -395,10 +418,13 @@ function init() {
     new BuyButton('Upgrade tractor', tractorBonus),
     new BuyButton('Open Roth IRA', investmentBonus)
   ]);
+
+
   var turnMenu = new Menu('Turn',[
     new Button('Next Turn', () => {
       selector.destroy();
-      place(selector,1,1);
+      place(selector,week,day);
+      turnCheck();
   })
   ])
 
@@ -426,6 +452,28 @@ function init() {
   meter2 = new Meter('Deb', 50);
 }
 
+function placeCalendarDays(){
+  for(var i = 0; i<7 ; i++){
+    let calendarDay = new CalendarDayCell(STATE.days[i]);
+    GAME.grid.setCellAt(calendarDay,i,0);
+  }
+}
+
+function turnCheck(){
+ day++;
+
+ //weeek check
+ if (day>6){
+   day=0;
+   week++;
+ }
+
+ //month check;
+if(week>4){
+  week = 1;
+}
+
+}
 
 // The game's main loop.
 // We're just using it to set a background color
