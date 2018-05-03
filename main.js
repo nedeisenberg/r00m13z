@@ -385,8 +385,8 @@ let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
 
 let trashDayCell = new TrashDayCell();trashDayCell.toggleClean();
 
-var week = 1;
-var day = 0;
+var weekCell =4;
+var dayCell = 1;
 
 
 // Initial setup of the game
@@ -423,27 +423,17 @@ function init() {
   var turnMenu = new Menu('Turn',[
     new Button('Next Turn', () => {
       selector.destroy();
-      place(selector,week,day);
+      console.log("w/d:"+weekCell + " " + dayCell);
+      place(selector,dayCell,weekCell);
       turnCheck();
-  })
+    })
   ])
-
-  // Define a harvester which
-  // regularly gives the player water
-  // depending on how many aqueducts they own
-//  defineHarvester('water', function() {
-//    return 2 * STATE.aqueducts;
-//  }, 2000);
-
-  // Define a harvester which uses up
-  // water based on how much wheat the player has
-//  defineHarvester('water', function() {
-//    return -1 * STATE.rents;
-//  }, 2000);
 
   // Define a harvester which
   // compounds the amount of money the player
   // has based on their investment return rate
+
+  //use harvester for overdue
   defineHarvester('money', function() {
     return STATE.resources.money * STATE.investment;
   }, 2000);
@@ -460,19 +450,18 @@ function placeCalendarDays(){
 }
 
 function turnCheck(){
- day++;
+ dayCell++;
 
  //weeek check
- if (day>6){
-   day=0;
-   week++;
+ if (dayCell>6){
+   dayCell=0;
+   weekCell++;
  }
 
  //month check;
-if(week>4){
-  week = 1;
-}
-
+ if(weekCell>4){
+   weekCell = 1;
+ }
 }
 
 // The game's main loop.
