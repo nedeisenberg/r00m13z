@@ -48,6 +48,8 @@ const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
 const BACKGROUND_COLOR = [0,255,0]
 
+RESOURCES_TEXT_SIZE = 38;
+
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
   money: '💵',
@@ -125,7 +127,10 @@ const STATE = {
 
 
 //0-6 for sunday thru monday
-  lastDayOfMonth: 0
+  lastDayOfMonth: 0,
+
+  trashDay : 4,
+  trashWeek : false
 }
 console.log(RESOURCES.items.cat[1]);
 
@@ -381,11 +386,11 @@ let payDayCellA = new PayDayCell('400');
 
 let payDayCellB = new PayDayCell('400');
 
-let bathDayCell = new BathDayCell();bathDayCell.toggleClean();
+let bathDayCell = new BathDayCell();//bathDayCell.toggleClean();
 
-let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
+let dishDayCell = new DishDayCell();//dishDayCell.toggleClean();
 
-let trashDayCell = new TrashDayCell();trashDayCell.toggleClean();
+let trashDayCell = new TrashDayCell();//trashDayCell.toggleClean();
 
 var weekCell =1;
 var dayCell = 1;
@@ -430,6 +435,7 @@ function init() {
     })
   ])
 
+
   // Define a harvester which
   // compounds the amount of money the player
   // has based on their investment return rate
@@ -452,23 +458,44 @@ function placeCalendarDays(){
 
 function turnCheck(){
   if (dayCell == 0){
+    weeklyCellSwap();
     STATE.resources.currentWeek++;
+    if (weekCell==1){
+      STATE.resource.currentMonth++;
+    }
   }
-
  dayCell++;
  STATE.resources.currentDay++;
-
  //weeek check
  if (dayCell>6){
    dayCell=0;
    weekCell++;
  }
-
  //month check;
  if(weekCell>4){
    weekCell = 1;
-   STATE.resources.currentMonth++;
  }
+  //SELECTOR FUNCTIONS!!
+}
+
+function weeklyCellSwap(){
+  // switch tiles to present week;
+    GAME.grid.setCellAt(new Cell(),1,weekCell-1);
+    GAME.grid.setCellAt(new Cell(),3,weekCell-1);
+    GAME.grid.setCellAt(new Cell(),4,weekCell-1);
+
+    GAME.grid.setCellAt(bathDayCell,1,weekCell);
+    GAME.grid.setCellAt(dishDayCell,3,weekCell);
+    //set
+    GAME.grid.setCellAt(trashDayCell,4,weekCell);
+}
+
+function randomTrash(){
+
+}
+
+function payRent(){
+  //subtract rent from $
 }
 
 // The game's main loop.
