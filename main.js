@@ -377,7 +377,9 @@ var meter1, meter2;
 
 
 ////MOVE DECLARATIONS TO GLOBAL
-let payDayCell = new PayDayCell('400');
+let payDayCellA = new PayDayCell('400');
+
+let payDayCellB = new PayDayCell('400');
 
 let bathDayCell = new BathDayCell();bathDayCell.toggleClean();
 
@@ -385,7 +387,7 @@ let dishDayCell = new DishDayCell();dishDayCell.toggleClean();
 
 let trashDayCell = new TrashDayCell();trashDayCell.toggleClean();
 
-var weekCell =4;
+var weekCell =1;
 var dayCell = 1;
 
 
@@ -397,16 +399,15 @@ function init() {
 //  place(rentCell, 0, 0);
   GAME.grid.setCellAt(rentCell,0,1);
 
-  GAME.grid.setCellAt(payDayCell,5,2);
+  GAME.grid.setCellAt(payDayCellA,5,2);
 
-  GAME.grid.setCellAt(payDayCell,5,4);
+  GAME.grid.setCellAt(payDayCellB,5,4);
 
   GAME.grid.setCellAt(bathDayCell,1,1);
 
-  GAME.grid.setCellAt(dishDayCell,2,1);
-  GAME.grid.setCellAt(dishDayCell,4,1);
+  GAME.grid.setCellAt(dishDayCell,3,1);
 
-  GAME.grid.setCellAt(trashDayCell,3,1);
+  GAME.grid.setCellAt(trashDayCell,4,1);
 
   STATE.rents += 1;
 
@@ -450,7 +451,12 @@ function placeCalendarDays(){
 }
 
 function turnCheck(){
+  if (dayCell == 0){
+    STATE.resources.currentWeek++;
+  }
+
  dayCell++;
+ STATE.resources.currentDay++;
 
  //weeek check
  if (dayCell>6){
@@ -461,6 +467,7 @@ function turnCheck(){
  //month check;
  if(weekCell>4){
    weekCell = 1;
+   STATE.resources.currentMonth++;
  }
 }
 
