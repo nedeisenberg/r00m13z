@@ -23,7 +23,7 @@ const IMAGES = {
   policeRaid: 'https://i.imgur.com/dD6hBPs.png',
   doorUnlocked: 'https://i.imgur.com/u9VrfwT.png',
   atWork: 'https://i.imgur.com/aqhTIEA.jpg',
-  salary: 'https://i.imgur.com/RejTpg6.png',
+  salary: 'https://i.imgur.com/XvNwcOt.png',
   border: 'https://i.imgur.com/PtzPUQy.png',
   letterF: 'https://i.imgur.com/9MCv9xI.png',
   letterD: 'https://i.imgur.com/1AeWD9i.png',
@@ -73,7 +73,7 @@ const RESOURCES = {
 
     saw: [false,"🗜️"],
     wrench: [false,"🔧"],
-    screwdriver: [false,"🔨"],
+    hammer: [false,"🔨"],
     batteries: [false,"🔋"],
     candles: [false,"🕯️"],
     rollingPapers: [false,"🗞️"]
