@@ -28,6 +28,7 @@ const IMAGES = {
   letterF: 'https://i.imgur.com/9MCv9xI.png',
   letterD: 'https://i.imgur.com/1AeWD9i.png',
   fullTrash: 'https://i.imgur.com/dBuJxZq.jpg',
+  //empty trash
 
   //days
   sunday: 'https://i.imgur.com/54BUbYO.png',
