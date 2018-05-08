@@ -93,7 +93,10 @@ const STATE = {
     currentDay : 1,
     currentWeek: 1,
     currentMonth : 1,
-    currentYear : 2000
+    currentYear : 2000,
+
+    rent: 200
+
   },
   cashPerCrop: 100,
   investment: 0,
@@ -125,9 +128,19 @@ const STATE = {
     december: 31
   },
 
+// MINIGAME
+
+//on / off
+
+//difficulty
+
+
+
 
 //0-6 for sunday thru monday
   lastDayOfMonth: 0,
+
+  bathWeekCount : 3,
 
   trashDay : 4,
   trashWeek : false
@@ -171,6 +184,7 @@ class RentCell extends Cell{
   constructor(rent){
     super();
     this.rent = rent;
+    this.id = 0;
   }
 
   get info(){
@@ -190,6 +204,7 @@ class PayDayCell extends Cell{
   constructor(sal){
     super();
     this.sal = sal;
+    this.id = 1;
   }
 
   get info(){
@@ -209,6 +224,7 @@ class BathDayCell extends Cell{
   constructor(){
     super();
     this.clean = false;
+    this.id = 2;
   }
 
   get info(){
@@ -244,6 +260,7 @@ class DishDayCell extends Cell{
   constructor(){
     super();
     this.clean = false;
+    this.id = 3;
   }
 
   get info(){
@@ -279,6 +296,7 @@ class TrashDayCell extends Cell{
   constructor(){
     super();
     this.clean = false;
+    this.id = 4;
   }
 
   get info(){
@@ -408,11 +426,11 @@ function init() {
 
   GAME.grid.setCellAt(payDayCellB,5,4);
 
-  GAME.grid.setCellAt(bathDayCell,1,1);
+//  GAME.grid.setCellAt(bathDayCell,1,1);
 
   GAME.grid.setCellAt(dishDayCell,3,1);
 
-  GAME.grid.setCellAt(trashDayCell,4,1);
+  //GAME.grid.setCellAt(trashDayCell,4,1);
 
   STATE.rents += 1;
 
@@ -435,11 +453,6 @@ function init() {
     })
   ])
 
-
-  // Define a harvester which
-  // compounds the amount of money the player
-  // has based on their investment return rate
-
   //use harvester for overdue
   defineHarvester('money', function() {
     return STATE.resources.money * STATE.investment;
@@ -456,7 +469,30 @@ function placeCalendarDays(){
   }
 }
 
+var currentCell;
+var currentCellID;
 function turnCheck(){
+  //Chore check FUNCTIONS
+  currentCell=GAME.grid.cellAt(dayCell,weekCell);
+  switch (currentCell.id) {
+    case 0:
+      STATE.resources.money-=STATE.resources.rent;
+      break;
+    case 1:
+      STATE.resources.money+=STATE.resources.income;
+      break;
+    case 2:
+      currentCell.toggleClean();
+      break;
+    case 3:
+      currentCell.toggleClean();
+      break;
+    case 4:
+      currentCell.toggleClean();
+    default:
+    
+  }
+
   if (dayCell == 0){
     weeklyCellSwap();
     STATE.resources.currentWeek++;
@@ -475,7 +511,8 @@ function turnCheck(){
  if(weekCell>4){
    weekCell = 1;
  }
-  //SELECTOR FUNCTIONS!!
+
+
 }
 
 function weeklyCellSwap(){
@@ -484,10 +521,20 @@ function weeklyCellSwap(){
     GAME.grid.setCellAt(new Cell(),3,weekCell-1);
     GAME.grid.setCellAt(new Cell(),4,weekCell-1);
 
-    GAME.grid.setCellAt(bathDayCell,1,weekCell);
+    // chores UNdone
+    bathDayCell.clean=false;
+    dishDayCell.clean=false;
+    trashDayCell.clean=false;
+
+    if(STATE.bathWeekCount==3){
+      GAME.grid.setCellAt(bathDayCell,1,weekCell);
+      STATE.bathWeekCount=1;
+    }else{
+      STATE.bathWeekCount++;
+    }
     GAME.grid.setCellAt(dishDayCell,3,weekCell);
     //set
-    GAME.grid.setCellAt(trashDayCell,4,weekCell);
+    GAME.grid.setCellAt(trashDayCell,STATE.trashDay,weekCell);
 }
 
 function randomTrash(){
