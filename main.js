@@ -92,17 +92,18 @@ const RESOURCES = {
 const STATE = {
   resources: {
 
-    money: 3000,
-    income: 300,
+    money: 1000,
 
     currentDay : 1,
     currentWeek: 1,
     currentMonth : 1,
     currentYear : 2000,
 
-    rent: 200
+    rent: 500
 
   },
+
+  income: 300,
   cashPerCrop: 100,
   investment: 0,
   aqueducts: 0,
@@ -118,7 +119,20 @@ const STATE = {
   'friday',
   'saturday'],
 
-  months: {
+  months: ['january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'july',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december'],
+
+  monthDays : {
     january: 31,
     february: 31,
     march: 31,
@@ -191,7 +205,7 @@ class RentCell extends Cell{
   }
 
   get info(){
-    return 'The rent is `${this.rent}';
+    return 'The rent is $' + this.rent;
   }
 
   get image(){
@@ -211,7 +225,7 @@ class PayDayCell extends Cell{
   }
 
   get info(){
-    return 'You make`${this.sal}';
+    return 'You make $' + this.sal;
   }
 
   get image(){
@@ -385,13 +399,15 @@ var investmentBonus = new Bonus(
     STATE.investment = 0.1;
   });
 
+
+
+
 var meter1;
 
-
 ////MOVE DECLARATIONS TO GLOBAL
-let payDayCellA = new PayDayCell('400');
+let payDayCellA = new PayDayCell(STATE.income);
 
-let payDayCellB = new PayDayCell('400');
+let payDayCellB = new PayDayCell(STATE.income);
 
 let bathDayCell = new BathDayCell();//bathDayCell.toggleClean();
 
@@ -448,7 +464,7 @@ function init() {
 window.addEventListener("keypress", (e) => {
   var keyCode = e.keyCode;
   console.log(keyCode);
-  if(keyCode == 0){
+  if(keyCode == 0 ){//&& !STATE.miniGameOn){
     selector.destroy();
     console.log("w/d:"+weekCell + " " + dayCell);
     place(selector,dayCell,weekCell);
@@ -471,11 +487,11 @@ function turnCheck(){
   currentCell=GAME.grid.cellAt(dayCell,weekCell);
   switch (currentCell.id) {
     case 0:
-      STATE.resources.money-=STATE.resources.rent;
+      payRent();
       break;
     case 1:
-      STATE.resources.money+=STATE.resources.income;
-      showModal("PayDay","Whoopee, you got paid $"+STATE.resources.income);
+      STATE.resources.money+=STATE.income;
+      showModal("PayDay","Whoopee, you got paid $"+STATE.income);
       break;
     case 2:
       minigame("Clean the bathroom!!!",7);
@@ -496,10 +512,16 @@ function turnCheck(){
     weeklyCellSwap();
     STATE.resources.currentWeek++;
     if (weekCell==1){
-      STATE.resource.currentMonth++;
+
+      STATE.resources.currentMonth++;
+      showModal(STATE.months[STATE.resources.currentMonth%12-1],"A new month has begun! Rent amounted $"+STATE.resources.rent);
+      if ((STATE.resources.currentMonth-1)%12==0){
+        STATE.resources.currentYear+=1;
+      }
     }
+
   }
- dayCell++;
+ dayCell+=1;
  STATE.resources.currentDay++;
  //weeek check
  if (dayCell>6){
@@ -508,7 +530,7 @@ function turnCheck(){
  }
  //month check;
  if(weekCell>4){
-   weekCell = 1;
+    weekCell = 1;
  }
 
 
@@ -516,9 +538,16 @@ function turnCheck(){
 
 function weeklyCellSwap(){
   // switch tiles to present week;
+  //reset last week cells
+  if(weekCell>1){
     GAME.grid.setCellAt(new Cell(),1,weekCell-1);
     GAME.grid.setCellAt(new Cell(),3,weekCell-1);
     GAME.grid.setCellAt(new Cell(),4,weekCell-1);
+  }else{
+    GAME.grid.setCellAt(new Cell(),1,weekCell+3);
+    GAME.grid.setCellAt(new Cell(),3,weekCell+3);
+    GAME.grid.setCellAt(new Cell(),4,weekCell+3);
+  }
 
     // chores UNdone
     bathDayCell.clean=false;
@@ -542,6 +571,7 @@ function randomTrash(){
 
 function payRent(){
   //subtract rent from $
+  STATE.resources.money-=STATE.resources.rent;
 }
 
 function minigame(name,i){
