@@ -40,15 +40,20 @@ const IMAGES = {
   saturday: 'https://i.imgur.com/72IRSxz.png'
 };
 
+var winW = window.innerWidth;
+var winH = window.innerHeight;
 // REQUIRED: configure the grid
+const TEXT_DEFAULT_COLOR = [255,230,210];
 const GRID_ROWS = 5;
 const GRID_COLS = 7;
-const GRID_CELL_SIZE = 150;
+const GRID_CELL_SIZE = winW/12;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
-const BACKGROUND_COLOR = [0,255,0]
+const GRID_ZOOM = false;
+const BACKGROUND_COLOR = [0,170,40];
+//const BACKGROUND_IMAGE = "https://i.imgur.com/om1kbpB.jpg";
 
-RESOURCES_TEXT_SIZE = 38;
+RESOURCES_TEXT_SIZE = winW/32;
 
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
@@ -133,8 +138,6 @@ const STATE = {
 //on / off
 
 //difficulty
-
-
 
 
 //0-6 for sunday thru monday
@@ -490,7 +493,7 @@ function turnCheck(){
     case 4:
       currentCell.toggleClean();
     default:
-    
+
   }
 
   if (dayCell == 0){
@@ -544,12 +547,18 @@ function randomTrash(){
 function payRent(){
   //subtract rent from $
 }
+//minigame = document.createElement('div')
 
 // The game's main loop.
 // We're just using it to set a background color
 function main() {
-  background(58, 170, 80);
+
+  //background(58, 170, 80);
 //  console.log(STATE.months.january)
+//textAlign(CENTER);
+//textSize(24);
+//text("R00M13Z: The Simulation",winW/2,winH/20);
+//textAlign(LEFT);
   //check turn event
     //chore?
     //payday?
@@ -562,4 +571,9 @@ function main() {
     //rent raise
 
   meter1.update(meter1.val + 0.1);
+}
+
+function drawBG(){
+
+
 }
