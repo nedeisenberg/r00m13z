@@ -136,9 +136,9 @@ const STATE = {
 // MINIGAME
 
 //on / off
+  miniGameOn : false,
 
 //difficulty
-
 
 //0-6 for sunday thru monday
   lastDayOfMonth: 0,
@@ -340,8 +340,6 @@ class Selector extends Item {
   // Wheat costs water and nitrogen
   get cost() {
     return {
-  //      water: 20,
-  //      nitrogen: 5
     }
   }
   // Show a different tooltip
@@ -356,24 +354,12 @@ class Selector extends Item {
   }
   // When a Wheat is clicked on...
   onClick() {
-    // Remove a bushel
-    this.quantity -= 1;
-
-    // Give the player money depending on the STATE.cashPerCrop variable
-    STATE.resources.money += STATE.cashPerCrop;
-
-    if (this.quantity <= 0) {
-      this.destroy();
-      showMessage('You lost some wheat!')
-    }
   }
 
   onPlace() {
-    STATE.rents++;
   }
 
   onDestroy() {
-    STATE.rents--;
   }
 }
 
@@ -399,7 +385,7 @@ var investmentBonus = new Bonus(
     STATE.investment = 0.1;
   });
 
-var meter1, meter2;
+var meter1;
 
 
 ////MOVE DECLARATIONS TO GLOBAL
@@ -456,13 +442,7 @@ function init() {
     })
   ])
 
-  //use harvester for overdue
-  defineHarvester('money', function() {
-    return STATE.resources.money * STATE.investment;
-  }, 2000);
-
-  meter1 = new Meter('Fran', 10);
-  meter2 = new Meter('Deb', 50);
+  meter1 = new Meter('Task', 0);
 }
 
 function placeCalendarDays(){
@@ -474,6 +454,9 @@ function placeCalendarDays(){
 
 var currentCell;
 var currentCellID;
+
+window.addEventListener("keypress")
+
 function turnCheck(){
   //Chore check FUNCTIONS
   currentCell=GAME.grid.cellAt(dayCell,weekCell);
@@ -483,14 +466,18 @@ function turnCheck(){
       break;
     case 1:
       STATE.resources.money+=STATE.resources.income;
+      showModal("PayDay","Whoopee, you got paid $"+STATE.resources.income);
       break;
     case 2:
+      minigame("bath",7);
       currentCell.toggleClean();
       break;
     case 3:
+      minigame("sink",7);
       currentCell.toggleClean();
       break;
     case 4:
+      minigame("trash",7);
       currentCell.toggleClean();
     default:
 
@@ -547,11 +534,37 @@ function randomTrash(){
 function payRent(){
   //subtract rent from $
 }
-//minigame = document.createElement('div')
-showModal("test","test");
-moveOverlay(40,300);
-moveOverlay(400,30);
-//resetOverlay();
+
+function minigame(name,i){
+  STATE.miniGameOn=true;
+  var randX;
+  var randY;
+
+  var taskButton = new Button(name,() => {
+    minigame(name,i-1);
+    console.log(i);
+  });
+
+  var lastTaskButton = new Button(name,() => {
+  })
+
+  if(i>1 && meter1.val<100){
+    randX = Math.floor(Math.random()*(winW-500));
+    randY = Math.floor(Math.random()*(winH-400));
+
+    showModal("Minigame",name,[taskButton]);
+    moveOverlay(randX, randY);
+  }else{
+    STATE.miniGameOn =false;
+    if (meter1.val<100){
+      showModal("Result", "Nice work, splendidly handled!");
+      meter1.update(0.);
+    }else{
+      showModal("Result", "You missed a spot.");
+      meter1.update(0.);
+    }
+  }
+}
 // The game's main loop.
 // We're just using it to set a background color
 function main() {
@@ -572,11 +585,8 @@ function main() {
     //rent
   //check year event
     //rent raise
-
-  meter1.update(meter1.val + 0.1);
-}
-
-function drawBG(){
-
-
-}
+    if(STATE.miniGameOn){
+      meter1.update(meter1.val + .25);
+      console.log(meter1.val)
+    }
+  }
