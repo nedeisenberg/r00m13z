@@ -593,7 +593,7 @@ function minigame(name,i){
   }else{
     STATE.miniGameOn =false;
     if (meter1.val<100){
-      showModal("Result", "Nice work, splendidly handled!");
+      showModal("Result", "Nice work, commendably handled!");
       meter1.update(0.);
     }else{
       showModal("Result", "You missed a spot.  It cost you $100");
