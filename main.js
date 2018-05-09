@@ -548,7 +548,10 @@ function payRent(){
   //subtract rent from $
 }
 //minigame = document.createElement('div')
-
+showModal("test","test");
+moveOverlay(40,300);
+moveOverlay(400,30);
+//resetOverlay();
 // The game's main loop.
 // We're just using it to set a background color
 function main() {

@@ -847,6 +847,7 @@ class Modal {
   render() {
     pause();
     let el = document.createElement('div');
+    el.style="position:absolute;left:30;top:30;";
 
     let title = document.createElement('h1');
     title.innerHTML = this.title;
@@ -876,7 +877,24 @@ function renderModal(child) {
   overlayEl.appendChild(el);
   overlayEl.style.display = 'block';
 }
+//new functions
+function moveOverlay(x,y){
+  overlayEl.childNodes[0].style.position="absolute";
+  overlayEl.childNodes[0].style.left=''+x+'px';
+  overlayEl.childNodes[0].style.top=''+y+'px';
+  overlayEl.childNodes[0].style.bottom='';
+  overlayEl.childNodes[0].style.right='';
+}
 
+function resetOverlay(){
+  overlayEl.childNodes[0].style.position="fixed";
+  overlayEl.childNodes[0].style.left='0';
+  overlayEl.childNodes[0].style.top='0';
+  overlayEl.childNodes[0].style.bottom='0';
+  overlayEl.childNodes[0].style.right='0';
+}
+
+//end new functions
 function renderGraphic(g, x, y) {
   // work around for
   // https://github.com/processing/p5.js/issues/2077
