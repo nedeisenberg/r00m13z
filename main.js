@@ -402,7 +402,7 @@ let trashDayCell = new TrashDayCell();//trashDayCell.toggleClean();
 var weekCell =1;
 var dayCell = 1;
 
-
+var selector;
 // Initial setup of the game
 function init() {
   placeCalendarDays();
@@ -423,7 +423,7 @@ function init() {
 
   STATE.rents += 1;
 
-  var selector = new Selector();
+  selector = new Selector();
   place(selector,0,1);
   // Setup the Menu for buying stuff
   var menu = new Menu('Farm Mall', [
@@ -445,6 +445,17 @@ function init() {
   meter1 = new Meter('Task', 0);
 }
 
+window.addEventListener("keypress", (e) => {
+  var keyCode = e.keyCode;
+  console.log(keyCode);
+  if(keyCode == 0){
+    selector.destroy();
+    console.log("w/d:"+weekCell + " " + dayCell);
+    place(selector,dayCell,weekCell);
+    turnCheck();
+  }
+});
+
 function placeCalendarDays(){
   for(var i = 0; i<7 ; i++){
     let calendarDay = new CalendarDayCell(STATE.days[i]);
@@ -454,8 +465,6 @@ function placeCalendarDays(){
 
 var currentCell;
 var currentCellID;
-
-window.addEventListener("keypress")
 
 function turnCheck(){
   //Chore check FUNCTIONS
@@ -469,15 +478,15 @@ function turnCheck(){
       showModal("PayDay","Whoopee, you got paid $"+STATE.resources.income);
       break;
     case 2:
-      minigame("bath",7);
+      minigame("Clean the bathroom!!!",7);
       currentCell.toggleClean();
       break;
     case 3:
-      minigame("sink",7);
+      minigame("Scrub the sink!!!",7);
       currentCell.toggleClean();
       break;
     case 4:
-      minigame("trash",7);
+      minigame("Take out the trash!!!",7);
       currentCell.toggleClean();
     default:
 
@@ -540,13 +549,10 @@ function minigame(name,i){
   var randX;
   var randY;
 
-  var taskButton = new Button(name,() => {
+  var taskButton = new Button("Go",() => {
     minigame(name,i-1);
     console.log(i);
   });
-
-  var lastTaskButton = new Button(name,() => {
-  })
 
   if(i>1 && meter1.val<100){
     randX = Math.floor(Math.random()*(winW-500));
@@ -560,7 +566,8 @@ function minigame(name,i){
       showModal("Result", "Nice work, splendidly handled!");
       meter1.update(0.);
     }else{
-      showModal("Result", "You missed a spot.");
+      showModal("Result", "You missed a spot.  It cost you $100");
+      STATE.resources.money-=100;
       meter1.update(0.);
     }
   }
