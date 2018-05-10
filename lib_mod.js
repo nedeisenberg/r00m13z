@@ -2,6 +2,7 @@
 
 let RESOURCES_TEXT_SIZE = 16;
 let RESOURCES_POSITION = [10, 10];
+let SPRITES_POSITION = [10,10];
 let MESSAGES_TEXT_SIZE = 16;
 let METERS_TEXT_SIZE = 12;
 let METERS_BAR_HEIGHT = 16;
@@ -680,6 +681,30 @@ function renderResources(top, right, size) {
   });
 }
 
+function renderSprites(top, left, size) {
+  size = size || RESOURCES_TEXT_SIZE;
+  let height = size;
+  let padding = 5;
+  let color = typeof TEXT_DEFAULT_COLOR === 'undefined' ? [0,0,0] : TEXT_DEFAULT_COLOR;
+  let v = 0;
+  Object.keys(STATE.sprites).forEach((k, i) => {
+    let name = SPRITES[k] || k;
+    let body =''
+    if (STATE.sprites[k]){
+      body+= `${name}`
+    }
+    //let body = `${name} ${STATE.resources[k]}`;
+    let width = textWidth(body);
+    fill(...color);
+    textSize(size);
+    //i%
+    text(body, left + (width + padding)*(i%4), top + height/2 + ((height + padding) * Math.floor(i/4)));
+
+  });
+
+
+}
+
 function renderTooltip(text, size, padding) {
   size = size || 16;
   padding = padding || 10;
@@ -1037,6 +1062,8 @@ function draw() {
   GAME.grid.render();
   renderMessages(10, 10);
   renderResources(RESOURCES_POSITION[0], RESOURCES_POSITION[1]);
+  //render sprites
+  renderSprites(SPRITES_POSITION[0], SPRITES_POSITION[1]);
   renderMeters();
   if (GAME.tooltip) {
     renderGraphic(GAME.tooltip, mouseX, mouseY);

@@ -50,6 +50,8 @@ const GRID_CELL_SIZE = winW/12;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
 const GRID_ZOOM = false;
+//const METERS_BAR_WIDTH = 220;
+//const METERS_BAR_HEIGHT = 32;
 const BACKGROUND_COLOR = [0,170,40];
 //const BACKGROUND_IMAGE = "https://i.imgur.com/om1kbpB.jpg";
 
@@ -58,33 +60,32 @@ RESOURCES_TEXT_SIZE = winW/32;
 // REQUIRED: define how our resources will be represented
 const RESOURCES = {
   money: '💵',
-  income: '💹',
 
   currentDay: "Day: ",
   currentWeek: "Week: ",
   currentMonth: "Month: ",
   currentYear: "Year: ",
+}
 
-  items: {
-    cat: [false,"🐈"],
-    dog: [false,"🐕"],
-    octopus: [false,"🐙"],
-    snake: [false,"🐍"],
-    guineaPig: [false,"🐹"],
+const SPRITES = {
+  cat: "🐈",
+  dog: "🐕",
+  octopus: "🐙",
+  snake: "🐍",
+  guineaPig: "🐹",
 
-    venusFlyTrap: [false,"🌺"],
-    aloeVera: [false,"🎍"],
-    cactus: [false,"🌵"],
-    tulip: [false,"🌷"],
-    marijuana: [false,"🌿"],
+  venusFlyTrap: "🌺",
+  aloeVera: "🎍",
+  cactus: "🌵",
+  tulip: "🌷",
+  marijuana: "🌿",
 
-    saw: [false,"🗜️"],
-    wrench: [false,"🔧"],
-    hammer: [false,"🔨"],
-    batteries: [false,"🔋"],
-    candles: [false,"🕯️"],
-    rollingPapers: [false,"🗞️"]
-  }
+  saw: "🗜️",
+  wrench: "🔧",
+  hammer: "🔨",
+  batteries: "🔋",
+  candles: "🕯️",
+  rollingPapers: "🗞️"
 }
 
 // REQUIRED: define our game state.
@@ -101,6 +102,27 @@ const STATE = {
 
     rent: 500
 
+  },
+
+  sprites: {
+    cat: false,
+    dog: false,
+    octopus: false,
+    snake: false,
+    guineaPig: false,
+
+    venusFlyTrap: false,
+    aloeVera: false,
+    cactus: false,
+    tulip: false,
+    marijuana: false,
+
+    saw: false,
+    wrench: false,
+    hammer: false,
+    batteries: false,
+    candles: false,
+    rollingPapers: false
   },
 
   income: 300,
@@ -162,7 +184,6 @@ const STATE = {
   trashDay : 4,
   trashWeek : false
 }
-console.log(RESOURCES.items.cat[1]);
 
 //random starting items
 
@@ -449,7 +470,7 @@ function init() {
   ]);
 
 
-  var turnMenu = new Menu('Turn',[
+  var turnMenu = new Menu('Press Space for Next Turn',[
     new Button('Next Turn', () => {
       selector.destroy();
       console.log("w/d:"+weekCell + " " + dayCell);
@@ -543,10 +564,16 @@ function weeklyCellSwap(){
     GAME.grid.setCellAt(new Cell(),1,weekCell-1);
     GAME.grid.setCellAt(new Cell(),3,weekCell-1);
     GAME.grid.setCellAt(new Cell(),4,weekCell-1);
+    if (STATE.trashWeek){
+      GAME.grid.setCellAt(new Cell(),STATE.trashDay,weekCell-1);
+    }
   }else{
     GAME.grid.setCellAt(new Cell(),1,weekCell+3);
     GAME.grid.setCellAt(new Cell(),3,weekCell+3);
     GAME.grid.setCellAt(new Cell(),4,weekCell+3);
+    if (STATE.trashWeek){
+      GAME.grid.setCellAt(new Cell(),STATE.trashDay,weekCell+3);
+    }
   }
 
     // chores UNdone
@@ -561,12 +588,30 @@ function weeklyCellSwap(){
       STATE.bathWeekCount++;
     }
     GAME.grid.setCellAt(dishDayCell,3,weekCell);
-    //set
-    GAME.grid.setCellAt(trashDayCell,STATE.trashDay,weekCell);
+
+    randomTrash();
+    if(STATE.trashWeek){
+      GAME.grid.setCellAt(trashDayCell,STATE.trashDay,weekCell);
+    }
 }
 
 function randomTrash(){
+  var randWeek = Math.random();
+  var randDay = Math.random()*7;
 
+  //determine if trash week
+  if (randWeek>.4){
+    STATE.trashWeek=false;
+  }else{
+    STATE.trashWeek=true;
+  }
+
+  //determine trash day
+  STATE.trashDay=Math.floor(randDay);
+  //and check that it doesn't conflict with another tile
+  if (GAME.grid.cellAt(STATE.trashDay,weekCell).id >=0){
+    STATE.trashWeek=false;
+  }
 }
 
 function payRent(){
@@ -593,7 +638,7 @@ function minigame(name,i){
   }else{
     STATE.miniGameOn =false;
     if (meter1.val<100){
-      showModal("Result", "Nice work, splendidly handled!");
+      showModal("Result", "Nicely handled!");
       meter1.update(0.);
     }else{
       showModal("Result", "You missed a spot.  It cost you $100");
