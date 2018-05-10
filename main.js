@@ -76,9 +76,9 @@ const SPRITES = {
   aloeVera: "🎍",
   cactus: "🌵",
   tulip: "🌷",
-  marijuana: "🌿",
+  cannabis: "🌿",
 
-  saw: "🗜️",
+  vice: "🗜️",
   wrench: "🔧",
   hammer: "🔨",
   batteries: "🔋",
@@ -113,9 +113,9 @@ const STATE = {
     aloeVera: false,
     cactus: false,
     tulip: false,
-    marijuana: false,
+    cannabis: false,
 
-    saw: false,
+    vice: false,
     wrench: false,
     hammer: false,
     batteries: false,
@@ -124,12 +124,6 @@ const STATE = {
   },
 
   income: 300,
-  cashPerCrop: 100,
-  investment: 0,
-  aqueducts: 0,
-  rents: 0,
-
-  leapYear: false,
 
   days: ['sunday',
   'monday',
@@ -152,20 +146,6 @@ const STATE = {
   'november',
   'december'],
 
-  monthDays : {
-    january: 31,
-    february: 31,
-    march: 31,
-    april: 30,
-    may: 31,
-    june: 30,
-    july: 31,
-    august: 31,
-    september: 30,
-    october: 31,
-    november: 30,
-    december: 31
-  },
 
 // MINIGAME
 
@@ -173,14 +153,22 @@ const STATE = {
   miniGameOn : false,
 
 //difficulty
+  sinkPopups: 7,
+  bathPopups: 7,
+  trashPopups: 7,
+
+  meterRate: .25,
+
+  repairFee: 100,
 
 //0-6 for sunday thru monday
-  lastDayOfMonth: 0,
 
   bathWeekCount : 3,
+  bathWeekCycle : 3,
 
   trashDay : 4,
-  trashWeek : false
+  trashWeek : false,
+  trashChance : .4
 }
 
 //random starting items
@@ -364,66 +352,183 @@ class TrashDayCell extends Cell{
   }
 }
 
-// Define a Wheat "item"
+//a cursor type tile modification
 class Selector extends Item {
-  // Initialize the rent with
-  // 3 bushels
+
   init() {
   }
-  // Wheat costs water and nitrogen
   get cost() {
     return {
     }
   }
-  // Show a different tooltip
-  // depending on how many bushels are left
   get info() {
       return 'This is today!'
   }
-  // Show a different image
-  // depending on how many bushels are left
   get image() {
     return 'border';
   }
-  // When a Wheat is clicked on...
   onClick() {
   }
-
   onPlace() {
   }
-
   onDestroy() {
   }
 }
 
-// Define a bonus
-var tractorBonus = new Bonus(
-  'Powerful Tractor',
-  'A more powerful tractor', {
-    money: 50
-  }, function() {
-    // When purchased,
-    // this bonus increases the cash per wheat
-    // bushel by $100
-    STATE.cashPerCrop += 100;
-  });
+// Define pet bonuses
+  var catBonus = new Bonus(
+    'Cat',
+    'One fewer popup when cleaning sink', {
+      money: 50
+    }, function(){
+      STATE.sinkPopups-=1;
+      STATE.sprites.cat=true;
+    });
 
-// Define another bonus
-var investmentBonus = new Bonus(
-  'Roth IRA',
-  'Make your money work for you', {
-    money: 100
-  }, function() {
-    // Set the investment variable to 0.1
-    STATE.investment = 0.1;
-  });
+  var dogBonus = new Bonus(
+    'Dog',
+    'Two fewer popups when taking out trash', {
+      money: 50
+    }, function(){
+      STATE.trashPopups-=2;
+      STATE.sprites.dog=true;
+    });
 
+  var octopusBonus = new Bonus(
+    'Octopus',
+    'One fewer popup when cleaning bathroom', {
+      money: 50
+    }, function(){
+      STATE.bathPopups-=1;
+      STATE.sprites.octopus=true;
+    });
 
+  var snakeBonus = new Bonus(
+    'Octopus',
+    'One fewer popup when cleaning bathroom', {
+      money: 70
+    }, function(){
+      STATE.sinkPopups-=1;
+      STATE.trashPopups-=1;
+      STATE.bathPopups-=1;
+      STATE.sprites.snake=true;
+    });
 
+  var guineaPigBonus = new Bonus(
+    'Guinea Pig',
+    'ITS JUST CUTE', {
+      money: 12
+    }, function(){
+      STATE.sprites.guineaPig=true;
+    });
+
+  // Define plant bonuses
+  var venusFlyTrapBonus = new Bonus(
+    'Venus Fly Trap',
+    'Chance of trash week decreases %10', {
+      money: 35
+    }, function(){
+      STATE.trashChance-=.1;
+      STATE.sprites.venusFlyTrap=true;
+    });
+
+  var aloeVeraBonus = new Bonus(
+    'Aloe Vera',
+    'Meter rate decreases a notch', {
+      money: 20
+    }, function(){
+      STATE.meterRate-=.05;
+      STATE.sprites.aloeVera=true;
+    });
+
+  var cactusBonus = new Bonus(
+    'Cactus',
+    'Meter rate decreases a notch', {
+      money: 20
+    }, function(){
+      STATE.meterRate-=.05;
+      STATE.sprites.cactus=true;
+    });
+
+  var tulipBonus = new Bonus(
+    'Tulip',
+    'Meter rate decreases a notch', {
+      money: 20
+    }, function(){
+      STATE.meterRate-=.05;
+      STATE.sprites.tulip=true;
+    });
+
+    var cannabisBonus = new Bonus(
+      'Cannabis',
+      'Three additional popups for each chore; meter rate zero.', {
+        money: 40
+      }, function(){
+        STATE.meterRate= 0.;
+        STATE.sinkPopups+=1;
+        STATE.trashPopups+=1;
+        STATE.bathPopups+=1;
+        STATE.sprites.cannabis=true;
+      });
+
+      //define hardware BONUSES
+
+      var viceBonus = new Bonus(
+        'Vice',
+        'Repair fee decreases by $30', {
+          money: 30
+        }, function(){
+          STATE.repairFee-=30;
+          STATE.sprites.vice=true;
+        });
+
+      var wrenchBonus = new Bonus(
+        'Wrench',
+        'Repair fee decreases by $25', {
+          money: 25
+        }, function(){
+          STATE.repairFee-=25;
+          STATE.sprites.wrench=true;
+        });
+
+      var hammerBonus = new Bonus(
+        'Hammer',
+        'Repair fee decreases by $15', {
+          money: 15
+        }, function(){
+          STATE.repairFee-=15;
+          STATE.sprites.hammer=true;
+        });
+
+      var batteriesBonus = new Bonus(
+        'Batteries',
+        'Rent decreases by $50', {
+          money: 100
+        }, function(){
+          STATE.resources.rent-=50;
+          STATE.sprites.batteries=true;
+        });
+
+      var candlesBonus = new Bonus(
+        'Candles',
+        'Bathroom stays clean over four weeks (from three)', {
+          money: 60
+        }, function(){
+          STATE.bathWeekCycle+=1;
+          STATE.sprites.candles=true;
+        });
+
+      var rollingPaperBonus = new Bonus(
+        'rollingPapers',
+        'Salary increases by $20', {
+          money: 5
+        }, function(){
+          STATE.salary+=20;
+          STATE.sprites.rollingPapers=true;
+        });
 
 var meter1;
 
-////MOVE DECLARATIONS TO GLOBAL
 let payDayCellA = new PayDayCell(STATE.income);
 
 let payDayCellB = new PayDayCell(STATE.income);
@@ -438,6 +543,7 @@ var weekCell =1;
 var dayCell = 1;
 
 var selector;
+
 // Initial setup of the game
 function init() {
   placeCalendarDays();
@@ -450,22 +556,36 @@ function init() {
 
   GAME.grid.setCellAt(payDayCellB,5,4);
 
-//  GAME.grid.setCellAt(bathDayCell,1,1);
-
   GAME.grid.setCellAt(dishDayCell,3,1);
-
-  //GAME.grid.setCellAt(trashDayCell,4,1);
-
-  STATE.rents += 1;
 
   selector = new Selector();
   place(selector,0,1);
+
   // Setup the Menu for buying stuff
-  var menu = new Menu('Farm Mall', [
-    //new BuyButton('Buy wheat', Rent),
-    new BuyButton('Upgrade tractor', tractorBonus),
-    new BuyButton('Open Roth IRA', investmentBonus)
+  var petShop = new Menu('Pet Shop', [
+    new BuyButton("Cat",catBonus),
+    new BuyButton("Dog",dogBonus),
+    new BuyButton("Octopus",octopusBonus),
+    new BuyButton("Snake",snakeBonus),
+    new BuyButton("Guinea Pig", guineaPigBonus)
   ]);
+
+  var plantNursery = new Menu('Plant Nursery', [
+    new BuyButton("Venus Fly Trap", venusFlyTrapBonus),
+    new BuyButton("Aloe Vera", aloeVeraBonus),
+    new BuyButton("Cactus", cactusBonus),
+    new BuyButton("Tulip", tulipBonus),
+    new BuyButton("Cannabis", cannabisBonus)
+  ]);
+
+  var hardwareStore = new Menu('Hardware Store',[
+    new BuyButton("Vice", viceBonus),
+    new BuyButton("Wrench", wrenchBonus),
+    new BuyButton("Hammer", hammerBonus),
+    new BuyButton("Batteries", batteriesBonus),
+    new BuyButton("Candles", candlesBonus),
+    new BuyButton("Rolling Papers", rollingPaperBonus)
+  ])
 
 
   var turnMenu = new Menu('Press Space for Next Turn',[
@@ -510,18 +630,18 @@ function turnCheck(){
       break;
     case 1:
       STATE.resources.money+=STATE.income;
-      showModal("PayDay","Whoopee, you got paid $"+STATE.income);
+      showModal("PayDay","Yahoo! you made $"+STATE.income);
       break;
     case 2:
-      minigame("Clean the bathroom!!!",7);
+      minigame("Clean the bathroom!!!",STATE.bathPopups);
       currentCell.toggleClean();
       break;
     case 3:
-      minigame("Scrub the sink!!!",7);
+      minigame("Scrub the sink!!!",STATE.sinkPopups);
       currentCell.toggleClean();
       break;
     case 4:
-      minigame("Take out the trash!!!",7);
+      minigame("Take out the trash!!!",STATE.trashPopups);
       currentCell.toggleClean();
     default:
 
@@ -531,14 +651,12 @@ function turnCheck(){
     weeklyCellSwap();
     STATE.resources.currentWeek++;
     if (weekCell==1){
-
       STATE.resources.currentMonth++;
       showModal(STATE.months[STATE.resources.currentMonth%12-1],"A new month has begun! Rent amounted $"+STATE.resources.rent);
       if ((STATE.resources.currentMonth-1)%12==0){
         STATE.resources.currentYear+=1;
       }
     }
-
   }
  dayCell+=1;
  STATE.resources.currentDay++;
@@ -551,8 +669,6 @@ function turnCheck(){
  if(weekCell>4){
     weekCell = 1;
  }
-
-
 }
 
 function weeklyCellSwap(){
@@ -579,7 +695,7 @@ function weeklyCellSwap(){
     dishDayCell.clean=false;
     trashDayCell.clean=false;
 
-    if(STATE.bathWeekCount==3){
+    if(STATE.bathWeekCount==STATE.bathWeekCycle){
       GAME.grid.setCellAt(bathDayCell,1,weekCell);
       STATE.bathWeekCount=1;
     }else{
@@ -595,17 +711,17 @@ function weeklyCellSwap(){
 
 function randomTrash(){
   var randWeek = Math.random();
-  var randDay = Math.random()*7;
+  var randDay = Math.random()*6;
 
   //determine if trash week
-  if (randWeek>.4){
+  if (randWeek>STATE.trashChance){
     STATE.trashWeek=false;
   }else{
     STATE.trashWeek=true;
   }
 
   //determine trash day
-  STATE.trashDay=Math.floor(randDay);
+  STATE.trashDay=Math.floor(randDay)+1;
   //and check that it doesn't conflict with another tile
   if (GAME.grid.cellAt(STATE.trashDay,weekCell).id >=0){
     STATE.trashWeek=false;
@@ -634,39 +750,21 @@ function minigame(name,i){
     showModal("Minigame",name,[taskButton]);
     moveOverlay(randX, randY);
   }else{
-    STATE.miniGameOn =false;
+    STATE.miniGameOn = false;
     if (meter1.val<100){
             showModal("Result", "Nicely handled!");
             meter1.update(0.);
     }else{
-      showModal("Result", "You missed a spot.  It cost you $100");
+      showModal("Result", "You missed a spot.  It cost you $"+ STATE.repairFee);
       STATE.resources.money-=100;
       meter1.update(0.);
     }
   }
 }
-// The game's main loop.
-// We're just using it to set a background color
-function main() {
 
-  //background(58, 170, 80);
-//  console.log(STATE.months.january)
-//textAlign(CENTER);
-//textSize(24);
-//text("R00M13Z: The Simulation",winW/2,winH/20);
-//textAlign(LEFT);
-  //check turn event
-    //chore?
-    //payday?
-    //random event?
-  //check week event
-    //reset chores
-  //check month event
-    //rent
-  //check year event
-    //rent raise
+// The game's main loop.
+function main() {
     if(STATE.miniGameOn){
-      meter1.update(meter1.val + .25);
-      console.log(meter1.val)
+      meter1.update(meter1.val + STATE.meterRate);
     }
   }

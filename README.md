@@ -10,29 +10,44 @@ Along the way, you encounter everything from ghosts to police raids. Can you sur
 GETTING STARTED
 After opening the game in your browser, you will be presented with a calendar which represents your life and day to day chores. You receive a salary every two weeks and your rent is automatically deducted but when it comes to chores and unexpected events, it's up to you to figure it out.
 
-You can use your funds to purchase tools, pets and plants found in the menu. Pets and plants can be purchased to alleviate your tension meter and tools will help lessen repair costs.
+You can use your funds to purchase tools, pets and plants found in the menu. Pets and plants can be purchased to alleviate your task load meter and tools will help lessen repair costs.
 
 
 
 GAME ELEMENTS
 Chores
 Include: Dishes, Laundry, Cleaning Bathroom, Trash
-Consequences of not doing chorse: Flood, Mold, Bugs 
-
-Random Occurances:
-Broken Cup, Ghost, Police Raid, Party, Door Left Unlocked, Travel
-Roommate moves out (causes you to cover their rent)
-
+Consequences of not doing chorse: Flood, Mold, Bugs
 
 Items Available for Purchase:
 Pets: Cat, Dog, Octopus, Snake, Guinea Pig
 Plants: Venus Fly Trap, Aloe Vera, Cactus, Tulip, Marijuana
 Tools: Saw, Wrench, Hammer, Batteries, Candles, Rolling Paper
 
-Occurances after Purchasing Pets:
-Pets: Damage done by cat, Dog barking, Escaped Octopus
+Pets:
+Cat: One fewer popup when cleaning sink
+Dog: Two fewer popups when taking out trash
+Octopus: One fewer popup when cleaning bathroom.
+Snake: One fewer popup for each chore;
+Guinea Pig:  ITS JUST CUTE
 
+Plants:
+Venus Fly Trap: Chance of trash week decreases 10%
+Aloe Vera: Meter rate down
+Cactus: Minigame area down
+Tulip: Meter rate down
+Cannabis: Three additional popups for each chore; meter rate zero.
 
+Tools:
+Vice: Repair for mold goes down $30
+Wrench: Repair for clog goes down $30
+Hammer: Exterminator fee decreases by $30
+Batteries: Rent goes down $30
+Candles: Rent goes down $50
+Rolling Paper: Salary increases by $100 
+
+Random Occurances (adding these later):
+Broken Cup, Ghost, Escaped Octopus, Dog Barking, Police Raid, Party, Scary Cat, Travel
 
 AUTHORS
 Aidan Edwards
