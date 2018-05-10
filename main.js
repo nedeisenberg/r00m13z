@@ -50,8 +50,6 @@ const GRID_CELL_SIZE = winW/12;
 const GRID_EMPTY = [247, 245, 165];
 const GRID_DRAG = false;
 const GRID_ZOOM = false;
-//const METERS_BAR_WIDTH = 220;
-//const METERS_BAR_HEIGHT = 32;
 const BACKGROUND_COLOR = [0,170,40];
 //const BACKGROUND_IMAGE = "https://i.imgur.com/om1kbpB.jpg";
 
