@@ -22,9 +22,6 @@ Consequences of not doing chorse: Flood, Mold, Bugs
 *Trash occurs at random days*
 
 Items Available for Purchase:
-Pets: Cat, Dog, Octopus, Snake, Guinea Pig
-Plants: Venus Fly Trap, Aloe Vera, Cactus, Tulip, Marijuana
-Tools: Saw, Wrench, Hammer, Batteries, Candles, Rolling Paper
 
 Pets:
 Cat: One fewer popup when cleaning sink
