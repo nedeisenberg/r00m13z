@@ -16,8 +16,10 @@ You can use your funds to purchase tools, pets and plants found in the menu. Pet
 
 GAME ELEMENTS
 Chores
-Include: Dishes, Laundry, Cleaning Bathroom, Trash
+Include: Dishes, Cleaning Bathroom, Trash
 Consequences of not doing chorse: Flood, Mold, Bugs
+*Bathroom cycles over a three week schedule*
+*Trash occurs at random days*
 
 Items Available for Purchase:
 Pets: Cat, Dog, Octopus, Snake, Guinea Pig
@@ -39,12 +41,12 @@ Tulip: Meter rate down
 Cannabis: Three additional popups for each chore; meter rate zero.
 
 Tools:
-Vice: Repair for mold goes down $30
-Wrench: Repair for clog goes down $30
-Hammer: Exterminator fee decreases by $30
-Batteries: Rent goes down $30
-Candles: Rent goes down $50
-Rolling Paper: Salary increases by $100 
+Vice: Repair fee goes down by $30
+Wrench: Repair fee goes down by $25
+Hammer: Repair fee decreases by $15
+Batteries: Rent goes down $50
+Candles: Bathroom stays clean over four weeks (from three)
+Rolling Paper: Salary increases by $20
 
 Random Occurances (adding these later):
 Broken Cup, Ghost, Escaped Octopus, Dog Barking, Police Raid, Party, Scary Cat, Travel
