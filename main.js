@@ -647,6 +647,10 @@ function turnCheck(){
 
   }
 
+  if (Math.random<.02){
+    showMessage('A ghost!');
+  }
+
   if (dayCell == 0){
     weeklyCellSwap();
     STATE.resources.currentWeek++;
