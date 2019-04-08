@@ -588,7 +588,7 @@ function init() {
   ])
 
 
-  var turnMenu = new Menu('Press Space for Next Turn',[
+  var turnMenu = new Menu('Press [return] for Next Turn',[
     new Button('Next Turn', () => {
       selector.destroy();
       console.log("w/d:"+weekCell + " " + dayCell);
@@ -603,7 +603,7 @@ function init() {
 window.addEventListener("keypress", (e) => {
   var keyCode = e.keyCode;
   console.log(keyCode);
-  if(keyCode == 0 ){//&& !STATE.miniGameOn){
+  if(keyCode == 13 ){//&& !STATE.miniGameOn){
     selector.destroy();
     console.log("w/d:"+weekCell + " " + dayCell);
     place(selector,dayCell,weekCell);
