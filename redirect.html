@@ -5,7 +5,6 @@ body{
   
 .link{
 position:absolute;
-  display:inline-block;
 z-index:1;
 width:100vw;
 height:100vh;
@@ -17,13 +16,14 @@ span{
 }
  
 a{
+   display:inline-block;
  vertical-align:middle;
   color:#08001d;
  text-decoration:none;
  font-family:Arial;
  font-size:4em;
  -moz-transition:font-size .8s ease-in;
--webkit-transition:height .8s ease-in;
+-webkit-transition:font-size .8s ease-in;
 }
  a:hover{
   font-size:4.5em;
