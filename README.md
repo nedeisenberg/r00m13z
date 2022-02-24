@@ -1,5 +1,7 @@
 # r00m13z
 
+Play it here: https://nedeisenberg.github.io/r00m13z/
+
 INTRODUCTION
 R00M13Z is a web based, single player game set in a modern day New York City apartment. The object of the game is to maintain harmony between yourself and your roommates, Fran and Deb. Fran is a single cat lady in her 30s from Minnesota while Deb is a gardener who grows her, uhm, plants in the apartment.
 Tensions experienced by you and your roommates is displayed in meters at the top of the page. Random occurences or annoying roommates can cause tension spikes, which can be alleviated by certain purchases.
